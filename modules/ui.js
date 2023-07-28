@@ -1,6 +1,6 @@
-import { Book } from './book.js';
+import Book from './book.js';
 
-export class UI {
+class UI {
   static addBookToList(book) {
     const list = document.getElementById('bookList');
     const li = document.createElement('li');
@@ -30,7 +30,8 @@ export class UI {
     if (target.classList.contains('delete')) {
       target.parentElement.remove();
       const title = target.previousElementSibling.textContent;
-      const author = target.previousElementSibling.previousElementSibling.textContent;
+      const author =
+        target.previousElementSibling.previousElementSibling.textContent;
       const book = new Book(title, author);
       UI.removeFromLocalStorage(book);
       UI.showAlert('Book removed', 'success');
@@ -64,8 +65,10 @@ export class UI {
   static removeFromLocalStorage(book) {
     let books = UI.getBooksFromLocalStorage();
     books = books.filter(
-      (item) => item.title !== book.title || item.author !== book.author
+      (item) => item.title !== book.title || item.author !== book.author,
     );
     localStorage.setItem('books', JSON.stringify(books));
   }
 }
+
+export default UI;
