@@ -4,7 +4,7 @@ class UI {
   static addBookToList(book) {
     const list = document.getElementById('bookList');
     const li = document.createElement('li');
-    li.innerHTML = `<div class='details'> <div> <strong> <span>'</span>${book.title}<span>'</span> by ${book.author} </strong> </div> <button class='delete'>Remove</button> </div>`;
+    li.innerHTML = `<div class='details'> <div> <strong> <span>'</span>${book.title}<span>'</span> by ${book.author} </strong> </div> <button class='delete' data-book='${book.title}'>Remove</button> </div>`;
     list.appendChild(li);
   }
 
@@ -29,10 +29,8 @@ class UI {
   static deleteBookFromList(target) {
     if (target.classList.contains('delete')) {
       target.parentElement.remove();
-      const title = target.previousElementSibling.textContent;
-      const author = target.previousElementSibling.previousElementSibling.textContent;
-      const book = new Book(title, author);
-      UI.removeFromLocalStorage(book);
+      const title = target.getAttribute('data-book');
+      UI.removeFromLocalStorage(title);
       UI.showAlert('Book removed', 'success');
     }
   }
@@ -63,9 +61,8 @@ class UI {
 
   static removeFromLocalStorage(book) {
     let books = UI.getBooksFromLocalStorage();
-    books = books.filter(
-      (item) => item.title !== book.title || item.author !== book.author,
-    );
+    books = books.filter((item) => item.title !== book);
+    UI.saveToLocalStorage(books);
     localStorage.setItem('books', JSON.stringify(books));
   }
 }
