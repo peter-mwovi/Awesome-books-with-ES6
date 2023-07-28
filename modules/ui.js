@@ -1,5 +1,3 @@
-import Book from './book.js';
-
 class UI {
   static addBookToList(book) {
     const list = document.getElementById('bookList');
