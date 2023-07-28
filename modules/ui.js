@@ -30,8 +30,7 @@ class UI {
     if (target.classList.contains('delete')) {
       target.parentElement.remove();
       const title = target.previousElementSibling.textContent;
-      const author =
-        target.previousElementSibling.previousElementSibling.textContent;
+      const author = target.previousElementSibling.previousElementSibling.textContent;
       const book = new Book(title, author);
       UI.removeFromLocalStorage(book);
       UI.showAlert('Book removed', 'success');
